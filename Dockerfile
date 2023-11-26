@@ -1,22 +1,19 @@
-ARG PG_TAG
+ARG PG_MAJOR=14
 
-FROM rust:1.74.0-bullseye as build
+FROM ghcr.io/cloudnative-pg/postgresql:$PG_MAJOR
 
-ARG PG_TAG
+ARG PG_MAJOR
 ARG PGVECTORS_TAG=v0.1.10
+ARG ARCH=x86_64
 
-RUN apt update && apt install -y build-essential libpq-dev libssl-dev pkg-config gcc libreadline-dev flex bison libxml2-dev libxslt-dev libxml2-utils xsltproc zlib1g-dev ccache clang git
+# drop to root to install packages
+USER root
+ADD https://github.com/tensorchord/pgvecto.rs/releases/download/$PGVECTORS_TAG/vectors-pg$PG_MAJOR-$PGVECTORS_TAG-$ARCH-unknown-linux-gnu.deb ./pgvectors.deb
+RUN apt install ./pgvectors.deb
 
-WORKDIR /build
-RUN git clone --depth 1 --branch $PGVECTORS_TAG https://github.com/tensorchord/pgvecto.rs.git .
-RUN cargo install cargo-pgrx --version $(grep '^pgrx ' Cargo.toml | awk -F'\"' '{print $2}')
-RUN cargo pgrx init
-RUN cargo pgrx package
+USER postgres
 
-# pull pgvectors
-# build and package pgvectors
-
-# FROM ghcr.io/cloudnative-pg/postgresql:$PG_TAG
-
-# copy pgvectors package
-# build pgvectors
+# From https://stackoverflow.com/a/42508925
+# Note that this way of enabling the plugin only works on database init
+# We should investigate alternative ways of enabling it that will always work
+COPY install-pgvectors.sql /docker-entrypoint-initdb.d/
