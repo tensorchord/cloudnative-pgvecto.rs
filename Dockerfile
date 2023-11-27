@@ -3,7 +3,7 @@ ARG PG_MAJOR=14
 FROM ghcr.io/cloudnative-pg/postgresql:$PG_MAJOR
 
 ARG PG_MAJOR
-ARG PGVECTORS_TAG=v0.1.10
+ARG PGVECTORS_TAG
 ARG ARCH=x86_64
 
 # drop to root to install packages
