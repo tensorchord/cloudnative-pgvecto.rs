@@ -25,11 +25,11 @@ jobs:
       matrix:
         # TODO: Get Renovate to update these
         cnpgTag:
-          - 14.10
-          - 15.5
-          - 16.1
+          - "14.10"
+          - "15.5"
+          - "16.1"
         pgvectorsVersion:
-          - v0.1.10
+          - "v0.1.10"
 
     steps:
       # Setup
