@@ -1,14 +1,18 @@
 ARG CNPG_TAG
 
-FROM ghcr.io/cloudnative-pg/postgresql:$CNPG_TAG
+FROM curlimages/curl AS download
 
 ARG PG_MAJOR
 ARG PGVECTORS_TAG
-ARG ARCH=x86_64
+
+WORKDIR /download
+RUN curl -o pgvectors.deb -sSL https://github.com/tensorchord/pgvecto.rs/releases/download/$PGVECTORS_TAG/vectors-pg$PG_MAJOR-$PGVECTORS_TAG-$(uname -m)-unknown-linux-gnu.deb
+
+FROM ghcr.io/cloudnative-pg/postgresql:$CNPG_TAG
 
 # drop to root to install packages
 USER root
-ADD https://github.com/tensorchord/pgvecto.rs/releases/download/$PGVECTORS_TAG/vectors-pg$PG_MAJOR-$PGVECTORS_TAG-$ARCH-unknown-linux-gnu.deb ./pgvectors.deb
+COPY --from=download /download/pgvectors.deb ./pgvectors.deb
 RUN apt install ./pgvectors.deb
 
 USER postgres

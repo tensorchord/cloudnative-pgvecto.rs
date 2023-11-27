@@ -78,8 +78,7 @@ jobs:
         uses: docker/build-push-action@v4.1.1
         with:
           context: .
-          # TODO: Enable multiarch build
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: ${{ !github.event.pull_request }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
