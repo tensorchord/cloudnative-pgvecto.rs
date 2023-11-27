@@ -84,6 +84,6 @@ jobs:
           cache-to: type=gha,mode=max
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
-          build-args: 
+          build-args: |
             PG_MAJOR=${{ steps.version.outputs.pg_major }}
             PGVECTORS_TAG=${{ matrix.pgvectorsVersion }}
