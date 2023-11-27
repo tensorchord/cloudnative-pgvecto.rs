@@ -85,5 +85,6 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           build-args: |
+            CNPG_TAG=${{ matrix.cnpgTag }}
             PG_MAJOR=${{ steps.version.outputs.pg_major }}
             PGVECTORS_TAG=${{ matrix.pgvectorsVersion }}

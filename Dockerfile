@@ -1,6 +1,6 @@
-ARG PG_MAJOR=14
+ARG CNPG_TAG
 
-FROM ghcr.io/cloudnative-pg/postgresql:$PG_MAJOR
+FROM ghcr.io/cloudnative-pg/postgresql:$CNPG_TAG
 
 ARG PG_MAJOR
 ARG PGVECTORS_TAG
