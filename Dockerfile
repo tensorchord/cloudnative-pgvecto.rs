@@ -2,11 +2,12 @@ ARG CNPG_TAG
 
 FROM curlimages/curl AS download
 
-ARG PG_MAJOR
+ARG CNPG_TAG
 ARG PGVECTORS_TAG
 
 WORKDIR /download
-RUN curl -o pgvectors.deb -sSL https://github.com/tensorchord/pgvecto.rs/releases/download/$PGVECTORS_TAG/vectors-pg$PG_MAJOR-$PGVECTORS_TAG-$(uname -m)-unknown-linux-gnu.deb
+RUN pg_major=$(echo $CNPG_TAG | cut -d'.' -f1) \
+    && curl -o pgvectors.deb -sSL https://github.com/tensorchord/pgvecto.rs/releases/download/$PGVECTORS_TAG/vectors-pg${pg_major}-$PGVECTORS_TAG-$(uname -m)-unknown-linux-gnu.deb
 
 FROM ghcr.io/cloudnative-pg/postgresql:$CNPG_TAG
 
