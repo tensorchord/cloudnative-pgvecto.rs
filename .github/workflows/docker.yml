@@ -67,11 +67,12 @@ jobs:
           images: |
             name=ghcr.io/${{ github.repository_owner }}/cnpgvecto.rs
           tags: |
-            type=ref,event=branch
             type=ref,event=pr
             # TODO: When exactly to push these tags?
             type=raw,value=${{ matrix.cnpgTag }}-${{ matrix.pgvectorsVersion }}
             type=raw,value=${{ steps.version.outputs.pg_major }}-${{ matrix.pgvectorsVersion }}
+            type=raw,value=${{ matrix.cnpgTag }}
+            type=raw,value=${{ steps.version.outputs.pg_major }}
 
       - name: Build and push image
         uses: docker/build-push-action@v4.1.1
