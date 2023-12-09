@@ -90,7 +90,7 @@ jobs:
             type=raw,value=${{ steps.version.outputs.pg_major }},enable=${{ steps.changed-version.outputs.any_changed == 'true' }}
 
       - name: Build and push image
-        uses: docker/build-push-action@v4.1.1
+        uses: docker/build-push-action@v4.2.1
         with:
           context: .
           platforms: linux/amd64,linux/arm64
