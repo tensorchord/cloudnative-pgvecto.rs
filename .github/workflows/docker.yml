@@ -28,7 +28,7 @@ jobs:
        uses: mikefarah/yq@v4.40.4
        id: get-versions
        with:
-        cmd: yq eval -j -I=0 versions.yaml
+        cmd: yq eval -o=json -I=0 versions.yaml
 
   build_and_push:
     runs-on: ubuntu-latest
