@@ -1,0 +1,7 @@
+cnpg:
+  # This is a comment
+  - "14.10"
+  - "15.5"
+  - "16.1"
+pgvectors:
+  - "v0.1.11"
