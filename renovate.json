@@ -13,5 +13,12 @@
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.*?\"(?<currentValue>.*)\"\\n"
       ]
     }
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major"],
+      "matchPackageNames": ["ghcr.io/cloudnative-pg/postgresql"],
+      "enabled": false
+    }
   ]
 }
