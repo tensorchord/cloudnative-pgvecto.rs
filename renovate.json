@@ -3,6 +3,8 @@
   "extends": [
     "config:base"
   ],
+  "automerge": true,
+  "rebaseWhen": "conflicted",
   "customManagers": [
     {
       "customType": "regex",
