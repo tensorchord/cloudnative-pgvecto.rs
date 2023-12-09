@@ -43,6 +43,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.0.0
@@ -58,6 +60,12 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Determine version change
+        id: changed-version
+        uses: tj-actions/changed-files@v40
+        with:
+          files: versions.yaml
+        
       - name: Set major postgres version
         id: version
         run: |
@@ -76,17 +84,17 @@ jobs:
           tags: |
             type=ref,event=pr
             # TODO: When exactly to push these tags?
-            type=raw,value=${{ matrix.cnpg }}-${{ matrix.pgvectors }}
-            type=raw,value=${{ steps.version.outputs.pg_major }}-${{ matrix.pgvectors }}
-            type=raw,value=${{ matrix.cnpg }}
-            type=raw,value=${{ steps.version.outputs.pg_major }}
+            type=raw,value=${{ matrix.cnpg }}-${{ matrix.pgvectors }},enable=${{ steps.changed-version.outputs.any_changed == 'true' }}
+            type=raw,value=${{ steps.version.outputs.pg_major }}-${{ matrix.pgvectors }},enable=${{ steps.changed-version.outputs.any_changed == 'true' }}
+            type=raw,value=${{ matrix.cnpg }},enable=${{ steps.changed-version.outputs.any_changed == 'true' }}
+            type=raw,value=${{ steps.version.outputs.pg_major }},enable=${{ steps.changed-version.outputs.any_changed == 'true' }}
 
       - name: Build and push image
         uses: docker/build-push-action@v4.1.1
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          push: ${{ !github.event.pull_request }}
+          push: ${{ !github.event.pull_request.head.repo.fork && steps.metadata.outputs.tags != '' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: ${{ steps.metadata.outputs.tags }}
