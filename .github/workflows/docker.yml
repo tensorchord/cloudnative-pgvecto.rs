@@ -25,7 +25,7 @@ jobs:
      - name: Checkout to repository
        uses: actions/checkout@v4
      - name: Get dependency versions
-       uses: mikefarah/yq@v4.40.4
+       uses: mikefarah/yq@v4.40.5
        id: get-versions
        with:
         cmd: yq eval -o=json -I=0 versions.yaml
