@@ -1,20 +1,15 @@
+# syntax=docker/dockerfile-upstream:master
 ARG CNPG_TAG
 
-FROM curlimages/curl AS download
+FROM ghcr.io/cloudnative-pg/postgresql:$CNPG_TAG
 
 ARG CNPG_TAG
 ARG PGVECTORS_TAG
 ARG TARGETARCH
 
-WORKDIR /download
-RUN pg_major=$(echo $CNPG_TAG | cut -d'.' -f1) \
-    && curl --fail -o pgvectors.deb -sSL https://github.com/tensorchord/pgvecto.rs/releases/download/$PGVECTORS_TAG/vectors-pg${pg_major}_${PGVECTORS_TAG#"v"}_$TARGETARCH.deb
-
-FROM ghcr.io/cloudnative-pg/postgresql:$CNPG_TAG
-
 # drop to root to install packages
 USER root
-COPY --from=download /download/pgvectors.deb ./pgvectors.deb
+ADD https://github.com/tensorchord/pgvecto.rs/releases/download/$PGVECTORS_TAG/vectors-pg${CNPG_TAG%.*}_${PGVECTORS_TAG#"v"}_$TARGETARCH.deb ./pgvectors.deb
 RUN apt install ./pgvectors.deb
 
 USER postgres
