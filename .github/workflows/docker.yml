@@ -39,8 +39,6 @@ jobs:
       matrix: ${{ fromJson(needs.configure.outputs.matrix) }}
 
     steps:
-      # Setup
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -110,3 +108,17 @@ jobs:
           build-args: |
             CNPG_TAG=${{ matrix.cnpg }}
             PGVECTORS_TAG=${{ matrix.pgvectors }}
+
+  results:
+      if: ${{ always() }}
+      runs-on: ubuntu-latest
+      name: Build results
+      needs: [build_and_push]
+      steps:
+        - run: |
+            result="${{ needs.build_and_push.result }}"
+            if [[ $result == "success" || $result == "skipped" ]]; then
+              exit 0
+            else
+              exit 1
+            fi
