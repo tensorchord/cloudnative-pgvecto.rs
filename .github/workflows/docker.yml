@@ -87,7 +87,7 @@ jobs:
             # Disable latest tag
             latest=false
           images: |
-            name=ghcr.io/${{ github.repository_owner }}/cnpgvecto.rs
+            name=ghcr.io/${{ github.repository }}
           tags: |
             type=ref,event=pr
             type=raw,value=${{ matrix.cnpg }}-${{ matrix.pgvectors }},enable=${{ steps.should-release.outputs.result }}
