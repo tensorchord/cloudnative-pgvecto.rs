@@ -89,7 +89,6 @@ jobs:
           images: |
             name=ghcr.io/${{ github.repository }}
           tags: |
-            type=ref,event=pr
             type=raw,value=${{ matrix.cnpg }}-${{ matrix.pgvectors }},enable=${{ steps.should-release.outputs.result }}
             type=raw,value=${{ steps.version.outputs.pg_major }}-${{ matrix.pgvectors }},enable=${{ steps.should-release.outputs.result }}
             type=raw,value=${{ matrix.cnpg }},enable=${{ steps.should-release.outputs.result }}
