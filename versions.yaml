@@ -7,4 +7,4 @@ cnpg:
   - "16.2"
 pgvectors:
   # renovate: datasource=github-releases depName=tensorchord/pgvecto.rs
-  - "v0.2.0"
+  - "v0.2.1"
