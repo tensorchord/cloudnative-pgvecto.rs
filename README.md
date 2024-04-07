@@ -16,14 +16,14 @@ Container images for [cloudnative-pg](https://cloudnative-pg.io/) with the [pgve
 >   ```
 
 > [!IMPORTANT]
-> The `pgvecto.rs` extension is not enabled by default. You need to enable it and set the search path when database initialization. You can configure it in your Cluster spec:
+> The `pgvecto.rs` extension is not enabled by default. You need to enable it and set the search path when initializing the database. You can configure it in your Cluster spec:
 > ```yaml
 > apiVersion: postgresql.cnpg.io/v1
 > kind: Cluster
 > spec:
 >   (...)
 >   bootstrap:
->       initdb:
+>     initdb:
 >       postInitSQL:
->           - ALTER SYSTEM SET search_path TO "$user", public, vectors;
->           - CREATE EXTENSION IF NOT EXISTS "vectors";
+>         - ALTER SYSTEM SET search_path TO "$user", public, vectors;
+>         - CREATE EXTENSION IF NOT EXISTS "vectors";
