@@ -27,3 +27,8 @@ Container images for [cloudnative-pg](https://cloudnative-pg.io/) with the [pgve
 >       postInitSQL:
 >         - ALTER SYSTEM SET search_path TO "$user", public, vectors;
 >         - CREATE EXTENSION IF NOT EXISTS "vectors";
+
+## Building
+
+To build the Dockerfile locally, you need to pass the `CNPG_TAG` and `PGVECTORS_TAG` args. For example:  
+`docker build . --build-arg="CNPG_TAG=16.3" --build-arg="PGVECTORS_TAG=v0.2.1"`
