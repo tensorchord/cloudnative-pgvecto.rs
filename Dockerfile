@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile-upstream:master
 ARG CNPG_TAG
 
 FROM ghcr.io/cloudnative-pg/postgresql:$CNPG_TAG
