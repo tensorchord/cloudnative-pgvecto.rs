@@ -19,6 +19,10 @@
       "matchUpdateTypes": ["major"],
       "matchPackageNames": ["ghcr.io/cloudnative-pg/postgresql"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["ghcr.io/cloudnative-pg/postgresql"],
+      "groupName": "postgresql"
     }
   ]
 }
