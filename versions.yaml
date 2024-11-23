@@ -1,12 +1,12 @@
 cnpg:
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
-  - "14.14"
+  - "14.15"
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
-  - "15.9"
+  - "15.10"
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
-  - "16.5"
+  - "16.6"
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
-  - "17.1"
+  - "17.2"
 pgvectors:
   # renovate: datasource=github-releases depName=tensorchord/pgvecto.rs
   - "v0.4.0"
