@@ -68,7 +68,8 @@ jobs:
       - name: Determine version change
         id: changed-version
         run: |
-          CHANGED_FILES=$(git diff --name-only origin/$GITHUB_BASE_REF...HEAD)
+          BASE=${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || 'HEAD~1' }}
+          CHANGED_FILES=$(git diff --name-only $BASE...HEAD)
           echo $CHANGED_FILES
           # Looking for:
           # versions.yaml
