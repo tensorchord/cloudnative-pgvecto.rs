@@ -67,9 +67,17 @@ jobs:
 
       - name: Determine version change
         id: changed-version
-        uses: tj-actions/changed-files@v45
-        with:
-          files: versions.yaml
+        run: |
+          CHANGED_FILES=$(git diff --name-only origin/$GITHUB_BASE_REF...HEAD)
+          echo $CHANGED_FILES
+          # Looking for:
+          # versions.yaml
+          # Dockerfile
+          if echo "$CHANGED_FILES" | grep -q -e "^versions.yaml$" -e "^Dockerfile$"; then
+            echo "any_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "any_changed=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Determine image push
         uses: actions/github-script@v7
